@@ -18,10 +18,9 @@ public class UserController {
     public ResponseEntity<String> create(@RequestBody @Valid NewUserRequest request) {
         User newUser = request.toModel();
 
-       if (repository.existsByUsername(newUser.getUsername())) {
-           return ResponseEntity.badRequest().body(String.format("Username %s already exists", newUser.getUsername()));
-       }
-
+        if (repository.existsByUsername(newUser.getUsername())) {
+            return ResponseEntity.badRequest().body(String.format("Username %s already exists", newUser.getUsername()));
+        }
         repository.save(newUser);
 
         return ResponseEntity.ok(new NewUserResponse(newUser).toString());
